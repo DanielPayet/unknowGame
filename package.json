@@ -1,11 +1,12 @@
 {
-  "name": "flow-server",
+  "name": "unknow-game-server",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack --config webpack.config.js && node ./dist/bundle.js"
+    "build:prod": "webpack --config webpack.prod.config.js",
+    "start:dev": "webpack --config webpack.dev.config.js",
+    "start:prod": "webpack --config webpack.prod.config.js && node ./dist/bundle.js"
   },
   "author": "",
   "license": "MIT",

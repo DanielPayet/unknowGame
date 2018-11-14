@@ -6,8 +6,12 @@ const port: number = +process.env.PORT || 3000;
 
 app.use(AppController);
 
+<<<<<<< Updated upstream
 app.use(express.static('public'));
+=======
+app.use(express.static('./public'));
+>>>>>>> Stashed changes
 
 app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/`);
+  console.log(`Listening at http://localhost:${port}/`);
 });
