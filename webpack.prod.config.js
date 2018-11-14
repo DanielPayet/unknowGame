@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/server.ts',
@@ -16,7 +17,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        filename: 'bundle.js',
+        filename: 'server.js',
         path: path.resolve(__dirname, 'dist')
     },
     mode: "production",
@@ -24,6 +25,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: 'src/public', to: 'public' }
-        ])
+        ]),
+        new CleanWebpackPlugin(['dist'])
     ]
 };
