@@ -6,15 +6,6 @@ const port: number = +process.env.PORT || 3000;
 
 app.use(AppController);
 
-const fs = require('fs');
-
-fs.open('./public/index.html', 'r', (err, fd) => {
-  if (err) throw err;
-  fs.close(fd, (err) => {
-    if (err) throw err;
-  });
-});
-
 app.use(express.static('public'));
 
 app.listen(port, () => {
