@@ -2,6 +2,7 @@ function Snake() {
         this.position = {'x': 0, 'y': 0};
         this.tailPositions = [{'x': 0, 'y': 0},{'x': 0, 'y': 0},{'x': 0, 'y': 0}];
         this.velocity = {'x': 0, 'y': 0};
+        this.moveVector = {'dX': 0, 'dY': 0};
         this.maxSpeed = 15;
         this.color = 0;
         this.cameraIndex = null;
@@ -17,11 +18,9 @@ function Snake() {
             
             // HEAD, ACCELLERATION, VELOCITY
             
-            let dX = (mousePosition.x - this.position.x);
-            let dY = (mousePosition.y - this.position.y);
-            this.velocity.x = (this.velocity.x + dX * 0.01);
-            this.velocity.y = (this.velocity.y + dY * 0.01);
-            let distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+            this.velocity.x = (this.velocity.x + this.moveVector.dX * 0.01);
+            this.velocity.y = (this.velocity.y + this.moveVector.dY * 0.01);
+            let distance = Math.sqrt(Math.pow(this.moveVector.dX, 2) + Math.pow(this.moveVector.dY, 2));
             let speed = Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2));
             let coefficient = (speed != 0) ? (Math.min(this.maxSpeed, speed) / speed) : 0;
             let deceleration = Math.max(Math.min(((Math.sqrt(Math.abs(distance) / 100), 1) + 10) / 11, 0.83));
