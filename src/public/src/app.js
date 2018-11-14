@@ -5,7 +5,6 @@
 
 var canvas
 var context
-var mousePosition = {'x': 0, 'y': 0};
 var snake = new Snake();
 let camera = new Camera(snake);
 camera.addObject(snake);
@@ -22,7 +21,9 @@ $(function() {
         let scaleX = canvas.width / rect.width;
         let scaleY = canvas.height / rect.height;
         let position = {x: ((event.clientX - rect.left) * scaleX), y: ((event.clientY - rect.top) * scaleY)}; 
-        mousePosition = camera.realPositionForPoint(position);
+        let mousePosition = camera.realPositionForPoint(position);
+        snake.moveVector.dX = mousePosition.x - snake.position.x;
+        snake.moveVector.dY = mousePosition.y - snake.position.y;
     });    
 
     setInterval(function() {
