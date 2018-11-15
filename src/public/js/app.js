@@ -24,7 +24,7 @@ $(function() {
         let mousePosition = camera.realPositionForPoint(position);
         snake.moveVector.dX = mousePosition.x - snake.position.x;
         snake.moveVector.dY = mousePosition.y - snake.position.y;
-    });    
+    });   
 
     setInterval(function() {
         snake.update();
@@ -35,7 +35,7 @@ $(function() {
 
 function generateAndRenderFood() {
     if (Math.random() < 0.08) {
-        let food = new Food(Math.random() * 2000, Math.random() * 2000);
+        let food = new Food(snake.position.x - (Math.random() * 2000), snake.position.y - (Math.random() * 2000));
         foods.push(food);
         camera.addObject(food);
     }
@@ -47,33 +47,36 @@ function Camera(focus) {
     this.followsFocus = true;
     this.position = {x:0,y:0};
     this.currentIndex = 1;
-    
+    this.scale = 1.5;
+
     this.positionFocus = () => {           
         return {
             x: (focus.position.x - (canvas.width / 2)), 
             y: (focus.position.y - (canvas.height / 2))
         }; 
     }
-    
+
     this.viewPositionForPoint = (point) => {
         return {x: point.x - this.positionFocus().x, y: point.y - this.positionFocus().y};
     }
-    
+
     this.realPositionForPoint = (point) => {
         return {x: point.x + this.positionFocus().x, y: point.y + this.positionFocus().y};
     }
-    
+
     this.addObject = (object) => {
         object.cameraIndex = this.currentIndex;
         this.objects.set(this.currentIndex, object);
         this.currentIndex += 1;
     }
-    
+
     this.removeObject = (object) => {
         this.objects.delete(object.cameraIndex);
     }
-    
+
     this.render = () => {
+        $(canvas).attr('height', window.innerHeight * this.scale);
+        $(canvas).attr('width', window.innerWidth * this.scale);
         context.clearRect(0, 0, canvas.width, canvas.height);
         this.objects.forEach((object) => {
             object.render(this); 
