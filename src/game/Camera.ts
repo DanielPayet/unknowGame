@@ -5,12 +5,14 @@ export class Camera {
     private followsFocus: boolean = true;
     private position: Position;
     private currentIndex: number;
+    private scale: number;
 
     constructor(private focus, private canvas) {
         this.objects = new Map();
         this.followsFocus = true;
         this.position = { x: 0, y: 0 };
         this.currentIndex = 1;
+        this.scale = 1.5;
     }
 
     public positionFocus() {
@@ -39,6 +41,8 @@ export class Camera {
     }
 
     public render(context) {
+        $(this.canvas).attr('height', window.innerHeight * this.scale);
+        $(this.canvas).attr('width', window.innerWidth * this.scale);
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.objects.forEach((object) => {
             object.render(this, context);

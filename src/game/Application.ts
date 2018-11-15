@@ -46,7 +46,7 @@ export class Application {
 
     private generateAndRenderFood() {
         if (Math.random() < 0.08) {
-            let food = new Food(Math.random() * 2000, Math.random() * 2000);
+            let food = new Food(this.snake.position.x - (Math.random() * 2000), this.snake.position.y - (Math.random() * 2000));
             this.foods.push(food);
             this.camera.addObject(food);
         }
