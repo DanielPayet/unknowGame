@@ -1,4 +1,5 @@
 import { Position } from './types/position';
+import $ from 'jquery';
 
 export class Camera {
     private objects: Map<any, any> = new Map();
