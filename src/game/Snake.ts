@@ -85,7 +85,11 @@ export class Snake {
         this.color %= 355;
     }
 
-    render(camera, context) {
+    public getSize() {
+        return this.tailPositions.length;
+    }
+
+    public render(camera, context) {
         let radius = 15;
         context.fillStyle = 'hsl(' + this.color + ', 100%, 50%)';
         context.beginPath();

@@ -31,7 +31,10 @@ module.exports = [
         plugins: [
             new NodemonPlugin(),
             new CleanWebpackPlugin(['dist'])
-        ]
+        ],
+        externals: {
+            uws: "uws"
+        },
     },
     {
         entry: {

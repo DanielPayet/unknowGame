@@ -29,14 +29,23 @@ export class Application {
 
     public initEvent() {
         $(document).on('mousemove', 'canvas', (event) => {
+            move(event.clientX, event.clientY);
+        });
+
+        $(document).on('touchmove', 'canvas', (e) => {
+            let touch = e.touches[0];
+            move(touch.clientX, touch.clientY);
+        });
+
+        let move = (x, y) => {
             let rect = this.canvas.getBoundingClientRect();
             let scaleX = this.canvas.width / rect.width;
             let scaleY = this.canvas.height / rect.height;
-            let position = { x: ((event.clientX - rect.left) * scaleX), y: ((event.clientY - rect.top) * scaleY) };
+            let position = { x: ((x - rect.left) * scaleX), y: ((y - rect.top) * scaleY) };
             let mousePosition = this.camera.realPositionForPoint(position);
             this.snake.moveVector.dX = mousePosition.x - this.snake.position.x;
             this.snake.moveVector.dY = mousePosition.y - this.snake.position.y;
-        });
+        }
 
         $(document).bind('keypress', (e) => {
             if (e.keyCode == 112 && !this.isPaused) {
@@ -44,6 +53,11 @@ export class Application {
             } else {
                 this.isPaused = false;
             }
+        });
+
+        $(document).on('touchend click', '#info', (e) => {
+            e.preventDefault();
+            this.isPaused = !this.isPaused;
         });
     }
 
@@ -54,6 +68,7 @@ export class Application {
             }
             this.camera.render(this.context);
             this.generateAndRenderFood();
+            this.updateScore();
         }, 16);
     }
 
@@ -70,5 +85,9 @@ export class Application {
             this.foods.push(food);
             this.camera.addObject(food);
         }
+    }
+
+    private updateScore() {
+        $("#score").text(this.snake.getSize() - 3);
     }
 }
