@@ -25,7 +25,7 @@ module.exports = [
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist')
         },
-        mode: "production",
+        mode: "development",
         target: 'node',
         watch: true,
         plugins: [
@@ -53,8 +53,7 @@ module.exports = [
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist/public')
         },
-        mode: "production",
-        target: 'node',
+        mode: "development",
         watch: true,
         plugins: [
             new CopyWebpackPlugin([

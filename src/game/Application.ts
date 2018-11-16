@@ -2,6 +2,7 @@ import { Food } from './Food';
 import { Snake } from './Snake';
 import { Camera } from './Camera';
 import $ from 'jquery';
+import io from 'socket.io-client';
 
 export class Application {
     private canvas;
@@ -9,8 +10,10 @@ export class Application {
     private snake: Snake;
     private camera: Camera;
     private foods: Food[];
+    private isPaused: boolean;
 
     constructor() {
+        this.isPaused = false;
         this.canvas = $('canvas').first()[0];
         this.context = this.canvas.getContext('2d');
         this.foods = [];
@@ -34,14 +37,31 @@ export class Application {
             this.snake.moveVector.dX = mousePosition.x - this.snake.position.x;
             this.snake.moveVector.dY = mousePosition.y - this.snake.position.y;
         });
+
+        $(document).bind('keypress', (e) => {
+            if (e.keyCode == 112 && !this.isPaused) {
+                this.isPaused = true;
+            } else {
+                this.isPaused = false;
+            }
+        });
     }
 
     public run() {
         setInterval(() => {
-            this.snake.update(this.foods, this.camera);
+            if (!this.isPaused) {
+                this.snake.update(this.foods, this.camera);
+            }
             this.camera.render(this.context);
             this.generateAndRenderFood();
         }, 16);
+    }
+
+    public initSocket() {
+        var socket = io.connect('http://localhost:3000');
+        socket.on("connection", (socket) => {
+            console.log("ok")
+        })
     }
 
     private generateAndRenderFood() {
