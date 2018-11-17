@@ -5,8 +5,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.config.js",
     "dev": "webpack --config webpack.dev.config.js",
-    "watch": "npm run dev",
-    "docker": "sudo ./docker.sh"
+    "watch": "npm run dev"
   },
   "author": "US",
   "license": "MIT",
