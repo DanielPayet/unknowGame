@@ -21,6 +21,7 @@ export class Application {
         this.camera = new Camera(this.snake, this.canvas);
         this.camera.addObject(this.snake);
         this.initEvent();
+        this.initSocket();
     }
 
     public static bootstrap() {
@@ -73,10 +74,10 @@ export class Application {
     }
 
     public initSocket() {
-        var socket = io.connect('http://localhost:3000');
-        socket.on("connection", (socket) => {
-            console.log("ok")
-        })
+        var socket = io.connect(process.env.server);
+        socket.on("Hello", (socket) => {
+            console.log("Bienvenu sur le jeu du turfu");
+        });
     }
 
     private generateAndRenderFood() {
