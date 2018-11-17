@@ -1,8 +1,7 @@
 FROM node:11.1
-ENV NODE_ENV production
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
-COPY . .
+COPY ["./*.js", "./*.json", "./"]
+COPY src src
+RUN npm i --silent && npm run build && rm -rf node_modules *.json src *.js && mv ./dist/* ./ && rmdir dist
 EXPOSE 3000
-CMD node dist/server.js
+CMD node server.js

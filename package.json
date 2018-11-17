@@ -6,8 +6,7 @@
     "build": "webpack --config webpack.prod.config.js",
     "dev": "webpack --config webpack.dev.config.js",
     "watch": "npm run dev",
-    "docker:build": "sudo docker build -t danielpayet974/unknowgame .",
-    "docker:push": "sudo docker push danielpayet974/unknowgame"
+    "docker": "sudo ./docker.sh"
   },
   "author": "US",
   "license": "MIT",

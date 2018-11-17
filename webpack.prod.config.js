@@ -26,7 +26,10 @@ module.exports = [
         target: 'node',
         plugins: [
             new CleanWebpackPlugin(['dist'])
-        ]
+        ],
+        externals: {
+            uws: "uws"
+        }
     },
     {
         entry: {
