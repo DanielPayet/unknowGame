@@ -28,7 +28,7 @@ module.exports = [
         plugins: [
             new CleanWebpackPlugin(['dist']),
             new CopyWebpackPlugin([
-                { from: 'src/server/cert/*', to: './cert' }
+                { from: 'src/server/cert/', to: './cert' }
             ]),
         ],
         externals: {
