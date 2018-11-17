@@ -3,6 +3,7 @@ const NodemonPlugin = require('nodemon-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = [
     {
@@ -30,7 +31,10 @@ module.exports = [
         watch: true,
         plugins: [
             new NodemonPlugin(),
-            new CleanWebpackPlugin(['dist'])
+            new CleanWebpackPlugin(['dist']),
+            new CopyWebpackPlugin([
+                { from: 'src/server/cert/', to: './cert' }
+            ]),
         ],
         externals: {
             uws: "uws"
@@ -60,11 +64,15 @@ module.exports = [
         watch: true,
         plugins: [
             new CopyWebpackPlugin([
-                { from: 'src/game/static/app.css', to: './' }
+                { from: 'src/game/static/', to: './' }
             ]),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: 'src/game/static/index.html'
+                template: 'src/game/template/index.html'
+            }),
+            new WorkboxPlugin.GenerateSW({
+                clientsClaim: true,
+                skipWaiting: true
             })
         ]
     }
