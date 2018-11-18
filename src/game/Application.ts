@@ -5,12 +5,14 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 
 export class Application {
+    public static app: Application;
     private canvas;
     private context;
     private snake: Snake;
     private camera: Camera;
-    private foods: Food[];
+    public foods: Food[];
     private isPaused: boolean;
+    public socket;
 
     constructor() {
         this.isPaused = false;
@@ -25,7 +27,8 @@ export class Application {
     }
 
     public static bootstrap() {
-        return new Application().run();
+        this.app = new Application()
+        return this.app.run();
     }
 
     public initEvent() {
@@ -68,24 +71,27 @@ export class Application {
                 this.snake.update(this.foods, this.camera);
             }
             this.camera.render(this.context);
-            this.generateAndRenderFood();
             this.updateScore();
         }, 16);
     }
 
     public initSocket() {
-        var socket = io.connect(process.env.server);
-        socket.on("Hello", (socket) => {
-            console.log("Bienvenu sur le jeu du turfu");
+        this.socket = io.connect(process.env.server);
+        this.socket.on("Hello", (data) => {
+            console.log("Bienvenue sur le jeu du turfu");
+            this.foods.push(...data.foods.map((f) => new Food(f.x, f.y)));
+            this.foods.forEach(food => {
+                this.camera.addObject(food);
+            })
         });
-    }
-
-    private generateAndRenderFood() {
-        if (Math.random() < 0.08) {
-            let food = new Food(this.snake.position.x - (Math.random() * 2000), this.snake.position.y - (Math.random() * 2000));
+        this.socket.on("newFood", (foodServer) => {
+            let food = new Food(foodServer.x, foodServer.y);
             this.foods.push(food);
             this.camera.addObject(food);
-        }
+        });
+        this.socket.on("foodEat", (key) => {
+            this.foods.splice(key, 1);
+        })
     }
 
     private updateScore() {

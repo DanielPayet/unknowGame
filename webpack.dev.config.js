@@ -71,10 +71,6 @@ module.exports = [
                 filename: 'index.html',
                 template: 'src/game/template/index.html'
             }),
-            new WorkboxPlugin.GenerateSW({
-                clientsClaim: true,
-                skipWaiting: true
-            }),
             new Dotenv({
                 path: 'src/game/environement/dev.env',
             })

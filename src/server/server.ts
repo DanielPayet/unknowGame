@@ -6,6 +6,7 @@ import * as http from 'http';
 import * as fs from 'fs';
 import { env } from './config/config';
 import { Socket } from './gameSocket/socket';
+import { Game } from './game/game';
 
 class Server {
     private serverHttp: http.Server;
@@ -16,6 +17,7 @@ class Server {
         this.configureExpressServer();
         this.configureSocketIo();
         this.runServer();
+        Game.run();
     }
 
     public static bootstrap() {

@@ -1,5 +1,6 @@
 import { Position } from './types/position';
 import { Food } from './Food';
+import { Application } from './Application';
 
 export class Snake {
     public position: Position = { 'x': 0, 'y': 0 };
@@ -9,6 +10,10 @@ export class Snake {
     public maxSpeed = 15;
     public color = 0;
     public cameraIndex = null;
+
+    public sendPosition() {
+        Application.app.socket.emit("snake", { position: this.position })
+    }
 
     public grow(size) {
         for (let i = 0; i < size; i++) {
@@ -72,7 +77,8 @@ export class Snake {
                     food.position.y += dY * coeff;
 
                     if (distance < 20) {
-                        foods.splice(key, 1);
+                        //foods.splice(key, 1);
+                        Application.app.socket.emit("foodEat", key);
                         camera.removeObject(food);
                         this.grow(1);
                     }
@@ -83,6 +89,7 @@ export class Snake {
         // COLOR CHANGE
         this.color += 1;
         this.color %= 355;
+        this.sendPosition();
     }
 
     public getSize() {
