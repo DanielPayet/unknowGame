@@ -77,7 +77,6 @@ export class Snake {
                     food.position.y += dY * coeff;
 
                     if (distance < 20) {
-                        //foods.splice(key, 1);
                         Application.app.socket.emit("foodEat", key);
                         camera.removeObject(food);
                         this.grow(1);
