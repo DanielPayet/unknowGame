@@ -90,6 +90,7 @@ export class Application {
             this.camera.addObject(food);
         });
         this.socket.on("foodEat", (key) => {
+            this.camera.removeObject(this.foods[key]);
             this.foods.splice(key, 1);
         })
     }

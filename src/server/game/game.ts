@@ -7,6 +7,6 @@ export class Game {
     public static run() {
         setInterval(() => {
             Food.generateFood();
-        }, 100);
+        }, 1000);
     }
 }
